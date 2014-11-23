@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "templater.h"
 
+/*
+ * Templater.c - Generates a TeX template with required depcenies based on
+ * what type of class is specified.
+ * 
+ * Author: Alexander Roth
+ * Date:   2014-11-22
+ */
 static void printUsage();
-void prepareClassInfo(const char **classInfo, char **argv);
-char *prepareFileName(const char **classInfo);
-int isCSClass(const char *classNumber);
-void writeTechnicalTemplate(FILE *texFile, const char **classInfo);
-void setTechnicalPackages(FILE *texFile);
-void writeStandardTemplate(FILE *texFile, const char **classInfo);
-void printGeneratedStatement(const char **classInfo);
 
 int main(int argc, char **argv) {
     if (argc != 5) {
@@ -28,7 +29,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    if (isCSClass(classInfo[1])) {
+    if (isTechnicalClass(classInfo[1])) {
         writeTechnicalTemplate(texFile, classInfo);
     } else {
         writeStandardTemplate(texFile, classInfo);
@@ -67,7 +68,7 @@ char *prepareFileName(const char **classInfo) {
     return fileName;
 }
 
-int isCSClass(const char *classNumber) {
+int isTechnicalClass(const char *classNumber) {
     return (strstr(classNumber, "COMS") || strstr(classNumber, "CSEE"));
 }
 
