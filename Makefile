@@ -17,7 +17,7 @@ templater.o: templater.c
 
 .PHONY: clean
 clean:
-	rm -f *.o *~ a.out templater
+	rm -f *.o *~ a.out templater *.tex
 
 .PHONY: all
 all: clean templater
