@@ -13,11 +13,11 @@
 static void printUsage();
 
 int main(int argc, char **argv) {
-    if (argc != 5) {
+    if (argc != 6) {
         printUsage();
     }
 
-    const char *classInfo[4];
+    const char *classInfo[5];
     prepareClassInfo(classInfo, argv);
 
     char *fileName = prepareFileName(classInfo);
@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 
 static void printUsage() {
     fprintf(stderr, "usage: templater <class> <class number> <series>"
-            " <series number>\n");
+            " <series number> <directory>\n");
     exit(1);
 }
 
@@ -51,17 +51,20 @@ void prepareClassInfo(const char **classInfo, char **argv) {
     char *classNumber = argv[2];
     char *seriesType = argv[3];
     char *seriesNumber = argv[4];
+    char *directory = argv[5];
     classInfo[0] = className;
     classInfo[1] = classNumber;
     classInfo[2] = seriesType;
     classInfo[3] = seriesNumber;
+    classInfo[4] = directory;
 }
 
 char *prepareFileName(const char **classInfo) {
     const char *extension = ".tex";
-    char *fileName = malloc(strlen(classInfo[2]) + 1 + strlen(classInfo[3]) 
-            + strlen(extension));
-    strcpy(fileName, classInfo[2]);
+    char *fileName = malloc(strlen(classInfo[4]) + strlen(classInfo[2]) + 1 
+            + strlen(classInfo[3]) + strlen(extension));
+    strcpy(fileName, classInfo[4]);
+    strcat(fileName, classInfo[2]);
     strcat(fileName, "-");
     strcat(fileName, classInfo[3]);
     strcat(fileName, extension);
