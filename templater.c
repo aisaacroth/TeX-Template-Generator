@@ -72,7 +72,8 @@ char *prepareFileName(const char **classInfo) {
 }
 
 int isTechnicalClass(const char *classNumber) {
-    return (strstr(classNumber, "COMS") || strstr(classNumber, "CSEE"));
+    return (strstr(classNumber, "COMS") || strstr(classNumber, "CSEE") 
+            || strstr(classNumber, "ENGI"));
 }
 
 void writeTechnicalTemplate(FILE *texFile, const char **classInfo) {
