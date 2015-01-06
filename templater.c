@@ -62,7 +62,7 @@ void prepareClassInfo(const char **classInfo, char **argv) {
 char *prepareFileName(const char **classInfo) {
     const char *extension = ".tex";
     char *fileName = malloc(strlen(classInfo[4]) + strlen(classInfo[2]) + 1 
-            + strlen(classInfo[3]) + strlen(extension));
+            + strlen(classInfo[3]) + strlen(extension) + 1);
     strcpy(fileName, classInfo[4]);
     strcat(fileName, classInfo[2]);
     strcat(fileName, "-");
