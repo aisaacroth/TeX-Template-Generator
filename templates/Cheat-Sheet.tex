@@ -1,0 +1,862 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol, isomath, amsmath, fourier, bigints}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{clrscode3e}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{hyperref}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\angles{\langle}{\rangle}
+
+% To make this come out properly in landscape mode, do one of the following
+% 1.
+%  pdflatex latexsheet.tex
+%
+% 2.
+%  latex latexsheet.tex
+%  dvips -P pdf  -t landscape latexsheet.dvi
+%  ps2pdf latexsheet.ps
+
+
+% If you're reading this, be prepared for confusion.  Making this was
+% a learning experience for me, and it shows.  Much of the placement
+% was hacked in; if you make it better, let me know...
+
+
+% 2008-04
+% Changed page margin code to use the geometry package. Also added code for
+% conditional page margins, depending on paper size. Thanks to Uwe Ziegenhagen
+% for the suggestions.
+
+% 2006-08
+% Made changes based on suggestions from Gene Cooperman. <gene at ccs.neu.edu>
+
+
+% To Do:
+% \listoffigures \listoftables
+% \setcounter{secnumdepth}{0}
+
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+        { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+        {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+                {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+                {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\textbf{Cheat
+     Sheet}} \\
+\end{center}
+
+
+\section*{Asymptotic Notation}
+\scriptsize{
+
+$\Theta(g(n)) = \{ f(n):\,\,\exists c_1, c_2, n_0 > 0\,\,|\,\, 0 \leq c_1g(n)
+\leq f(n) \leq c_2g(n) \,\,\forall n \geq n_0 \}.$
+
+$O(g(n)) = \{ f(n):\,\,\exists c, n_0 > 0\,\,|\,\,0 \leq f(n) \leq
+cg(n)\,\,\forall\,\,n\geq n_0\}.$
+
+$\Omega(g(n)) = \{ f(n):\,\,\exists c, n_0 > 0\,\,|\,\,0 \leq cg(n) \leq
+f(n)\,\,\forall\,\,n\geq n_0\}.$
+
+$o(g(n)) = \{ f(n):\,\,\forall c > 0,\,\,\exists n_0 > 0\,\,|\,\,0\leq f(n) <
+cg(n)\,\,\forall\,\,n\geq n_0\}.$
+
+$\omega(g(n)) = \{ f(n):\,\,\forall c >0,\,\,\exists n_0 > 0\,\,|\,\,0 \leq
+cg(n) < f(n)\,\,\forall\,\,n_0 > 0\}.$
+}
+\section{Standard Notations}
+
+\subsection*{Modular Arithmetic}
+\scriptsize{
+For any integer $a$ and any positive integer $n$, the value $a \mod n$ is the
+remainder of the quotient $a/n$
+
+$a\mod n = a - n\lfloor a/n\rfloor$
+}
+
+\subsection*{Exponentials}
+\scriptsize{
+For all real $a > 0$, $m$, and $n$, we have the following identities:
+\begin{tabular}{ c c }
+$(a^m)^n = a^{mn}$ & $(a^m)^n = (a^n)^m$ \\
+$a^ma^n = a^{m+n}$ &
+$\lim_{n\to\infty}n^b/a^n = 0 \implies n^b = o(a^n)$.
+\end{tabular}
+}
+
+\subsection*{Logarithms}
+\scriptsize{
+\begin{tabular}{ c c }
+$\lg^k{n} = (\lg{n})^k$ & $\lg\lg{n} = \lg(\lg{n})$ \\
+$a = b^{\log_{b}a}$  &$\log_{c}(ab) = \log_{c}a + \log_{c}b$ \\
+$a^{\log_{b}{c}} = c^{\log_{b}{a}}$ & $\lim{n\to\infty}\lg^b{n}/n^a = 0 \implies
+\lg^b{n} = o(n^a)$
+\end{tabular}
+}
+
+\subsection*{Factorials}
+\scriptsize{
+Stirling's approximation
+\begin{tabular}{ c c c }
+$n! = o(n^n)$ & $n! = \omega(2^n)$ & $\lg(n!) = \Theta(n\lg{n})$
+\end{tabular}
+}
+
+\section*{Divide-and-Conquer}
+\scriptsize{
+\textbf{Divide} the problem into a number of subproblems that are smaller
+instances of the same problem. \\
+\textbf{Conquer} the subproblems by solving them recursively. If the subproblem
+sizes are small enough, however, just solve the subproblmes in a straightforward
+manner.\\
+\textbf{Combine} the soultions to the subproblems into the solution for the
+original problem. \\
+\textbf{Substitution method:} Guess a bound and then use mathematical induction
+to prove guess is correct.\\
+\textbf{Recursion-tree method:} Convert the recurrence into a tree whose nodes
+represent the costs incurred at various levels of recursion. Use techniques for
+bounding summations to solve the recurrences.\\
+\textbf{Master method:} Bounds recurrences of the form $T(n) = aT(n/b) + f(n)$
+where $a \geq 1$, $b > 1$ and $f(n)$ is a given function.
+}
+
+\subsection{Substitution Method}
+\scriptsize{
+1) Guess the form of the solution. 2) Use mathematical induction to find the
+constants and show that the solution works.
+}
+
+\subsubsection*{Good Guess}
+\scriptsize{
+If a recurrence is similar to one you have seen before, then guessing a similar
+solution is reasonable. Another technique is to prove loose upper and lower
+bounds on the recurrence and then reduce the range of uncertainty.
+}
+
+\subsubsection*{Subtleties}
+\scriptsize{
+Mathematical induction does not work unless we prove the exact form of the
+indcutive hypothesis.\\
+$T(n) \leq c\lfloor{n/2}\rfloor + c\lceil{n/2}\rceil + 1 = cn + 1$ does not
+work. Need to use $T(n) \leq cn - d$, where $d \geq 0$ is a constant.
+}
+
+\subsubsection*{Changing Variables}
+\scriptsize{
+$T(n) = 2T(\floor{\sqrt{n}}) + \lg{n} \Rightarrow m = \lg{n} \Rightarrow T(2^m)
+= 2T(2^{m/2})+m \Rightarrow S(m) = T(2^m) \Rightarrow S(m) = 2S(m/2) + m$.\\
+Using the master theorem, we see that $S(m) = O(m\lg{m}) \Rightarrow
+O(\lg{n}\lg\lg{n})$.
+}
+
+\subsection*{Recursion-tree method}
+\scriptsize{
+Each node represents the cost of a single subproblem somewhere in the set of
+recursive function invocations.
+}
+
+\subsection*{Master Method}
+\scriptsize{
+Solve recurrences of the form $T(n) = aT(n/b) + f(n)$ where $a \geq 1$ and $b>1$
+are constants and $f(n)$ is an asymptotically positive function.\\
+1. If $f(n) = O(n^{\log_{b}{a}-\epsilon})$ for some constant $\epsilon > 0$,
+then $T(n) = \Theta(n^{\log_{b}{a}})$\\
+2. If $f(n) = \Theta(n^{\log_{b}{a}})$, then $T(n) =
+\Theta(n^{\log_{b}{a}}\lg{n})$.\\
+3. If $f(n) = \Omega(n^{\log_{b}{a}+\epsilon})$ for some constant $\epsilon > 0$
+and if $af(n/b) \leq cf(n)$ for some constant $c < 1$ and all sufficiently large
+$n$, then $T(n) = \Theta(f(n))$.\\
+For cases 1 and 3, must be polynomial larger; otherwise, master theorem does not
+work.
+}
+
+\section*{Heapsort}
+\scriptsize{
+The \textbf{heap} data structure - array object, nearly complete binary tree.
+Each node corresponds to an element of an array.\\
+The \textbf{height} of a heap with $n$ elements is $\Theta(\lg{n})$. \\
+\proc{Max-heapify} and \proc{min-heapify} run in $O(\lg{n})$ time.\\
+\proc{Build-max-heap} runs in $O(n)$ time produces a heap from an unordered
+input array.\\
+\proc{Heapsort} runs in $O(n\lg{n})$ time, sorts an array in place.
+}
+
+\section*{Sorting in Linear Time}
+\subsection*{Lower bounds for sorting}
+\scriptsize{
+\textbf{Decision tree:} a full binary tree that represents the comparisons
+between elements that are performed by a particular sorting algorithm on an
+input of a given size. Each of $n!$ permutations on $n$ elements must appear as
+one of the leaves of teh decision tree. \\
+Any comparison sort algorithm requires $\Omega(n\lg{n})$ comparisons in the
+worst case.
+}
+
+\subsection*{Counting sort}
+\scriptsize{
+Assumes that each of the $n$ input elements is an integer in the range 0 to $k$.
+Determines for each input $x$, the number of elements less than $x$.It uses this
+information to place element $x$ directly into its position in the output array.
+The overall runtime is $\Theta(k + n)$ where $k$ is the size of the counting
+array. Typically has a runtime of $\Theta(n)$. This sort is \textbf{stable}:
+numbers with the same value appear in the output array in the same order as they
+do in the input array.
+}
+
+\subsection*{Radix sort}
+\scriptsize{
+Sorts on the least significant digit first and works to the most significant
+digit. Given $n$ $d$-digit numbers in which each digit can take on up to $k$
+possible vlaues, \proc{radix-sort} correctly sorts these numbers in $\Theta(d(n
++ k))$ time if the stable sort it uses takes $\Theta(n + k)$ time.
+}
+
+\section*{Medians and Order Statistics}
+\scriptsize{
+The $i$th \textbf{order statistic} of a set of $n$ elements is the $i$th
+smallest element.\\
+The \textbf{selection problem} has \textbf{input} of a set $A$ of $n$ (distinct)
+numbers and an integer $i$, with $1 \leq i \leq n$. It gives as \textbf{output}
+the element $x \in A$ that is larger than exactly $i - 1$ other elements of $A$.
+}
+
+\subsection*{Selection in worst-case linear time}
+\scriptsize{
+\proc{Select} finds the desired element by recursively partitioning the input
+array. \\
+1. Divide the $n$ elements from input into $\floor{n/5}$ groups of 5 element
+each and at most one group made up of the remaining $n \mod 5$ elements.\\
+2. Find the median of each group by first insertion-sorting the elements of each
+group and picking the median from the sorted list.\\
+3. Use \proc{SELECT} recursively to find the median $x$ of the $\ceil{n/5}$
+medians found in step 2.\\
+4. Partition the input array around median-of-medians $x$ using modified version
+of \proc{partition}. Let $k$ be one more than the number of elements on the low
+side of the partition, so that $x$ is the $k$th smallest element and there are
+$n-k$ elements on the high side of the partition.\\
+5. If $i = k$, then return $x$. Otherwise, use \proc{select} recursively to find
+the $i$th smallest element on the low side if $i < k$, or the $(i-k)$th smallest
+element on the high side if $i>k$.
+}
+
+\section*{Probabilistic Analysis}
+\scriptsize{
+Use knowledge of, or make assumptions about, the distribution of the inputs.
+Analyze algorithm, computing an average-case running time, where we take the
+average over the distribution of the possible inputs. Averaging the running tim
+eover all possible inputs.\\
+\textbf{Uniform random permutation:} any possibility is likely to appear with
+equal probability of the set size.
+}
+
+\subsection*{Indicator random variables}
+\scriptsize{
+Variable associated with event $A$ that is 1 if $A$ occurs and 0 otherwise.\\
+Given a sample space $S$ and an event $A$ in the sample space $S$, let $X_A =
+I\{A\}$. Then $\textrm{E}[X_A] = \Pr\{A\}$.
+}
+
+\section*{Quicksort}
+\subsection*{Description}
+\scriptsize{
+\textbf{Divide:} Partition the array $A[p\,.\,.\,r]$ into two subarrays
+$A[p\,.\,.\,q-1]$ and $A[q+1\,.\,.\,r]$ such that each element of
+$A[p\,.\,.\,q-1]$ is less than or equal to $A[q]$, which is less than or equal
+to each element of $A[q+1\,.\,.\,r]$. Compute the index $a$ are part of this
+partitioning procedure.\\
+\textbf{Conquer:} Sort the two subarrays by recursvive calls to quicksort.\\
+\textbf{Combine:} Because the subarrays are already sorted, no work is needed to
+combine them: the entire array is now sorted.
+}
+
+\subsection*{Partitioning the array}
+\scriptsize{
+At the beginning of each iteration of partition, for any array index $k$, 1) If
+$p \leq k \leq i$, then $A[k] \leq x$. 2) If $i + 1 \leq k \leq j - 1$, then
+$A[k]>x$. 3) If $k = r$, then $A[k] = x$.
+}
+
+\subsection*{Performance of quicksort}
+\scriptsize{
+If partitioning is balanced, algorithm runs asymptotically as fast as merge
+sort. If unbalanced, run asymptotically as slowly as insertion sort.
+}
+
+\subsubsection*{Worst-case partitioning}
+\scriptsize{
+Worst-case: partitioning produces one subproblmem wiht $n - 1$ elements and one
+with 0 elements or already sorted array. Runtime is $\Theta(n^2)$.
+}
+
+\subsubsection*{Base-case partitioning}
+\scriptsize{
+Most even split, two subproblems of size no more than $n/2$. Recurrence is $T(n)
+= 2T(n/2) + \Theta(n)$ By case 2 of Master Theorem, we have $T(n) =
+\Theta(n\lg{n})$.
+}
+
+\subsubsection*{Balanced partitioning}
+\scriptsize{
+Closer to best case. Any split of \emph{constant} proportionality yields a
+recursion tree of depth $\Theta(\lg{n})$, where each level has a cost of $O(n)$.
+Partitioning costs $\Theta(n)$.
+}
+
+\subsection*{Randomized version of quicksort}
+\scriptsize{
+\textbf{Random sampling:} select a randomly chosen element from the subarray
+$A[p\,.\,.\,r]$. Ensures the pivot element is likely to be any of the $r - p +
+1$ elements in the subarray. Expect the split of input array to be well balanced
+on average.
+}
+
+\subsection*{Analysis of quicksort}
+\scriptsize{
+\proc{randomized-quicksort} and \proc{quicksort} differ only in how they select
+pivot elements. Can couch analysis of \proc{randomized-quicksort} by looking at
+\proc{quicksort}.\\
+Let $X$ be the number of comparisons performed in \proc{partition} over the
+entire execution of \proc{quicksort} on an $n$-element array. Then the running
+time of \proc{quicksort} is $O(n + X)$. \\
+Elements are only compared against each other if one of the pair is chosen as
+the pivot.
+}
+
+\subsection*{Selection in expected linear time}
+\scriptsize{
+As in quicksort, partition the input array recursively. In quicksort, we
+recursively process both sides of the partition. \proc{randomized-select} only
+works on one side of the partition. This gives \proc{randomized-select} a
+runtime of $\Theta(n)$, assuming all elements are distinct.\\
+The worst-case running time is $\Theta(n^2)$. Could always partition around the
+largest remaining element, and partitioning takes $\Theta(n)$ time.\\
+\proc{randomized-partition} is equally likely to return any element as the
+pivot. Therefore, for each $k$ such that $1 \leq k \leq n$, the subarray
+$A[p\,.\,.\,q]$ has $k$ elements with probability $1/n$.
+}
+
+\section*{Dynamic Programming}
+\scriptsize{
+Applies when subproblmes overlap. Solves each subsubproblem just once and then
+saves its answer in a table.\\
+When developing a dynamic-programming algorithm, there are four steps:\\
+1. Characterize the structure of an optimal solution.\\
+2. Recursively define the value of an optimal solution.\\
+3. Compute the value of an optimal solution, typically in a bottom-up fashion.\\
+4. Construct an optimal solution from computed information.
+}
+
+\subsection*{Rod cutting}
+\scriptsize{
+Given a rod of length $n$ inches and a table of prices $p_i$ for $i = 1,
+2,\ldots,n$ determine the maximum revenue $r_n$ obtainable by cutting up the rod
+and selling the pieces.\\
+If an optimal soultion cuts the rod into $k$ pieces, for some $1 \leq k \leq n$,
+then an optimal decomposition $n = i_1 + i_2 + \cdots + i_k$ of the rod into
+pieces of lengths $i_1,i_2,\ldots,i_k$ provides maximum corresponding revenue
+$r_n=p_{i_1}+p_{i_2}+\cdots+p_{i_k}$.\\
+Note that to solve the original problem of size $n$, we solve smaller
+independent instances of the rod-cutting problem. \\
+\textbf{Optimal Substructure:} optimal solutions to a problem incorporate
+optimal solution to related subproblems, which we may solve independently.\\
+We may view every decomposition of a length-$n$ rod as a first piece followed by some decomposition of the remainder. This gives the recurrence $r_n = \underset{1\leq i \leq n}{\max}(p_i + r_{n-i})$ Not efficient, covers all $2^{n-1}$ possible ways to cut a rod of length $n$.\\
+For DP, we arrange for each subproblem to be solved only \emph{once}, saving it's solution for later. Uses additional memory to save time. A DP approach runs in polynomial time when the number of \emph{distinct} subproblems involved is polynomial in the input size and we can solve each such problem in polynomial time.\\
+\textbf{Top-down with memoization:} Write the procedure recursively, save results of each subproblem. Procedure first checks to see whether it has previously solved this subproblem.\\
+\textbf{Bottom-up method:} Sort the subproblems by size and solve them in size order, smallest first. When solving a particular subproblem, we have already solved all of the smaller subproblems its solution depends upon and saved their solutions.\\
+Both approaches yield the same asymptotic running time, except in unusual circumstances where the top-down approach does not recurse to examine all possible subproblems.\\
+Total running time is $\Theta(n^2)$.
+}
+
+\subsubsection*{Subproblem graphs}
+\scriptsize{
+A directed graph, containing one vertex for each distinct subproblem. Has a directed edge from the vertex for subproblem $x$ to the vertex for subproblem $y$ if determining an optimal solution form $x$ involes directly considering an optimal solution for $y$.
+}
+
+\subsubsection*{Reconstructing a solution}
+\scriptsize{
+We can extend the DP approach to record not only the optimal \emph{value} computed for each subproblem, but also a \emph{choice} that led to the optimal value.
+}
+
+\subsection*{Matrix-chain multiplication}
+\scriptsize{
+A product of matrices is \textbf{fully parenthesized} if it is either a single matrix or the product of two fully parenthesized matrix products, surrounded by parentheses.\\
+Given a chain $\angles{A_1,A_2,\ldots,A_n}$ for $n$ matrices, where for $i = 1, 2,\ldots,n$, matrix $A_i$ has dimension $p_{i-1} \times p_i$, fully parenthesize the product $A_1A_2\cdots A_n$ in a way that minimizes the number of scalar multiplications.\\
+\textbf{Optimal substructure:} To optimally parenthesize $A_iA_{i+1}\cdots A_j$ we must split the product between $A_k$ and $A_{k+1}$ The way we parenthesize the prefix subchain $A_iA_{i+1}\cdots A_k$ within this optimal parenthesization of $A_iA_{i+1}\cdots A_j$ must be an optimal parenthesization of $A_iA_{i+1}\ldots A_k$. If there were a less costly way to parenthesize the subarray, then we could substitute that parenthesization in the optimal parenthesization to produce another way to parenthesize the whole array whose cost was lower than the optimal: a contradiction.\\
+Let $m[i,j]$ be the minimum number of scalar multiplications needed to compute the matrix $A_{i..j}$. If $i = j$, the chain is just one matrix $A_i$, no scalar multiplications. In other cases, we have $m[i,j] = \underset{i \leq k < j}{\min}\{m[i,k] + m[k+1,j] + p_{i-1}p_kp_j\}$. We define $s[i,j]$ to be the value of $k$ at which we split the product in an optimal solution.\\
+Running time of this algorithm is $O(n^3)$ and requires $\Theta(n^2)$ space to store the $m$ and $s$ tables.
+}
+
+\subsection*{Elements of dynamic programming}
+\subsubsection*{Optimal substructure}
+\scriptsize {
+1. Show that a solution to the problem consists of making a choice. Making this choice leaves one or more subproblems to be solved. \\
+2. For a given problem, you are given the choice that leads to an optimal solution. Assume it has been given to you.\\
+3. Given this choice, you determine which subproblems ensue and how to best characterize the resulting space of subproblems.\\
+4. You show that the soultions to the subproblems used wthin an optimal solution to the problem must themselves be optimal by using a ``cut-and-paste'' technique. Suppose the each of the subproblem solutions is not optimal, derive a contradiction. ``Cut-out'' the nonoptimal solution to each subproblem and ``paste in'' the optimal one.\\
+The running time of a DP algorithm depends on the product of two factors: the number of subproblems overall and how many choices we look at for each subproblem.\\
+Finding an optimal solution to the problem entails making a choice among subproblems as to which we will use in solving the problem. The cost of the problem solution is usually the subproblem cost plus a cost that is attributed to the choice itself.
+}
+
+\subsubsection*{Overlapping subproblems}
+\scriptsize{
+Divide-and-conquer usually generates brand-new problems at each step of the recursion. DP tyipically take advantage of overlapping subproblems.
+}
+
+\subsection*{Longest common subsequence}
+\scriptsize{
+Given two sequences $X = \angles{x_1,x_2,\ldots,x_m}$ and $Y = \angles{y_1,y_2,\ldots,y_n}$, find a maximum-length common subsequence of $X$ and $Y$.\\
+}
+
+\subsubsection*{Characterizing LCS}
+\scriptsize{
+\textbf{Optimal substructure:} Let $X = \angles{x_1,x_2,\ldots,x_m}$ and $Y = \angles{y_1,y_2,\ldots,y_n}$ be sequences, and let $Z = \angles{z_1,z_2,\ldots,z_k}$ be any LCS of $X$ and $Y$.\\
+1. If $x_m = y_n$, then $z_k = x_m = y_n$ and $Z_{k-1}$ is an LCS of $X_{m-1}$ and $Y_{n-1}$.\\
+2. If $x_m \neq y_n$, then $z_k \neq x_m$ implies that $Z$ is an LCS of $X_{m-1}$ and $Y$.\\
+3. If $x_m \neq y_n$, then $z_k \neq y_n$ implies that $Z$ is an LCS of $X$ and $Y_{n-1}$
+}
+
+\subsubsection*{A recursive solution}
+\scriptsize{
+If $x_m = y_n$, we must find an LCS of $X_{m-1}$ and $Y_{n-1}$. Appending $x_m = y_n$ to this LCS yields an LCS of $X$ and $Y$. If $x_m \neq y_n$, then we must solve two subproblems: finding an LCS of $X_{m-1}$ and $Y$ and finding an LCS of $X$ and $Y_{n-1}$. Define $c[i,j]$ to be the length of LCS of the sequences $X_i$ and $Y_j$. If either $i = 0$ or $j=0$, one of the sequences has length 0, and so LCS has length 0. The LCS problem has only $\Theta(mn)$ distinct subproblems.
+}
+
+\section*{Greedy Algorithms}
+\scriptsize{
+Always makes the choice that looks best at the moment. It makes a locally optimal choice in the hope that this choice will lead to a globally optimal solution.
+}
+
+\subsection*{Activity-selection problem}
+\scriptsize{
+We wish to select a maximum-size subset of mutually compatible activities.\\
+Start by thinking about a DP solution. Notice that we only need to consider one choice -- the greedy choice -- and that when we make the greedy choice, only one subproblem remains.
+}
+
+\subsubsection*{Optimal substructure of the activity-selection problem}
+\scriptsize{
+Denote by $S_{ij}$ the set of activities that start after activity $a_i$ finished and that finish before activity $a_j$ starts. A maximum set of activities is $A_{ij}$, which includes some activity $a_k$. By including $a_k$ we have two subproblems: finding mutually compatible activities in the set $S_{ik}$ and finding mutually compatible activities in the set $S_{kj}$. Let $A_{ik} = A_{ij} \cap S_{ik}$ and $A_{kj} = A_{ij} \cap S_{kj}$, so that $A_{ik}$ contains the activities in $A_{ij}$ that finish before $a_k$ starts and $A_{kj}$ contains the activities in $A_{ij}$ that start after $a_k$ finishes. Thus, we have $A_{ij} = A_{ik} \cup \{a_k\} \cup A_{kj}$, and so the maximum-size set of $A_{ij}$ of mutually compatible activities in $S_{ij}$ consists of $|A_{ij}| = |A_{ik}| + |A_{kj}| + 1$ activities.\\
+If we could find a set $A_{kj}^\prime$ of mutually compatible activities in $S_{kj}$ where $|A_{kj}^\prime|$ > $|A_{kj}|$, then we could use $A_{kj}^\prime$ in a solution to the subproblem for $S_{ij}$. We would have constructed a set of $|A_{ik}| + |A_{kj}^\prime| + 1 > |A_{ik}| + |A_{kj}| + 1 = |A_{ij}|$ mutually compatible activities.
+}
+
+\subsubsection*{Making the greedy choice}
+\scriptsize{
+Consider any nonempty subproblem $S_k$, and let $a_m$ be an activity in $S_k$ with the earliest finish time. Then $a_m$ is included in some maximum-size subset of mutually compatible activities of $S_k$.\\
+Let $A_k$ be a maximum-size subset of mutually compatible activities in $S_k$ and let $a_j$ be the activity in $A_k$ with the earliest finish time. If $a_j = a_m$, we are done, since we have shown that $a_m$ is in some maximum-size subset of mutually compatible activities of $S_k$. If $a_j \neq a_m$, let the set $A_{k}^\prime = A_k - \{a_j\}\cup\{a_m\}$ be $A_k$ but substituting $a_m$ for $a_j$. The activities in $A_{k}^\prime$ are disjoint, which follows because the activities in $A_k$ are disjoint, $a_j$ is the first activity in $A_k$ to finish, and $f_m \leq f_j$. Since $|A_k^\prime| = |A_k|$, we conclude that $A_k^\prime$ is a maximum-size subset of mutually compatible activities of $S_k$, and it includes $a_m$.\\
+Algorithm should run in $\Theta(n)$ time.
+}
+
+\subsection*{Elements of the greedy strategy}
+\scriptsize{
+We design greedy algorithms according to the following sequence of steps:\\
+1. Cast the optimization problem as one in which we make a choice and are left with one subproblem to solve.\\
+2. Prove that there is always an optimal solution to the original problem that makes the greedy choice, so that the greedy choice is always safe.\\
+3. Demonstrate optimal substructure by showing that, having made the greedy choice, what remains is a subproblem with the property that if we combine an optimal solution to the subproblem with the greedy choice we have made, we arrive at an optimal solution to the original problem.
+}
+
+\subsubsection*{Greedy-choice property}
+\scriptsize{
+Assemble a globally optimal solution by making locally optimal choices. When we are considering which choice to make, we make the choice that looks best in the current problem, without considering results from subproblems.\\
+A greedy algorithm makes its first choice before solving any subproblmes and usually progresses in a top-down fashion.
+}
+
+\subsubsection*{Optimal substructure}
+\scriptsize{
+An optimal solution to the problem contains within it optimal solutions to subproblems. We have the luxury of assuming we arrived at a subproblem by having made the greedy choice in the original problem. Need to argue that an optimal solution to the subproblem, combined with the greedy choice already made, yields an optimal solution to the original problem.
+}
+
+\section*{Amortized Analysis}
+\scriptsize{
+Average the time required to perform a sequence of data-structure operations over all the operations performed. Guaratees the average performance of each operation in the worst case.
+}
+
+\subsection*{Aggregate analysis}
+\scriptsize{
+Show that for all $n$, a sequence of $n$ operations takes \emph{worst-case} time $T(n)$ in total. In the worst case, the average cost, or \textbf{amortized cost}, per operation is therefore $T(n)/n$. This cost applies to each operation, even when there are several types of operations in the sequence.
+}
+
+\subsection*{The accounting method}
+\scriptsize{
+Assign different charges to different operations, with some operations charged more or less than they actually cost. Amount charged is the \textbf{amortized cost}. When an operation's amortized cost exceeds its actual cost, assign the difference to \textbf{credit} within the data structure. Credit helps pay for operations who amortized cost is less than the real cost.\\
+We must ensure that the total amortized cost of a sequence of operations provides an upper bound on the total acutal cost of the sequence. Similarly, this relationship must hold for all sequences of operations. That is $\sum_{i=1}^{n}\hat{c}_i \geq \sum_{i=1}^{n}c_i$. The total credit associated with the data structure must be nonnegative at all times in order to ensure an upper bound.
+}
+
+\subsection*{The potential method}
+\scriptsize{
+Represents prepaid work as ``potential energy,'' or just ``potential,'' which can be released to pay for future operations. Associate the potential with the data structure as a whole rather than with specific objects within the data structure.\\
+We will perform $n$ operations, starting with an initial data structure $D_0$. For each $i = 1, 2, \ldots, n$, we let $c_i$ be the actual cost of the $i$th operation and $D_i$ be the data structure that results after applying the $i$th operation to the data structure $D_{i-1}$. A \textbf{potential fucntion $\Phi$} maps each data structure $D_i$ to a real number $\Phi(D_i)$, which is the \textbf{potential} associated with data structure $D_i$. The amortized cost $\hat{c}_i$ of the $i$th operation with respect to potential function $\Phi$ is defined by $\hat{c}_i = c_i + \Phi(D_i) - \Phi(D_{i-1})$. The total amortized cost of $n$ operations is $\sum_{i=1}^{n}\hat{c}_i = \sum_{i=1}^{n}(c_i + \Phi(D_i) - \Phi(D_{i-1})) = \sum_{i=1}^{n}c_i + \Phi(D_n) - \Phi(D_0)$\\
+We define a potential function $\Phi$ so that $\Phi(D_n) \geq \Phi(D_0)$, the the total amortized cost gives an upper bound on the total actual cost. Typically define $\Phi(D_0)$ to 0.
+}
+
+%\section*{Summations}
+%\subsection*{Formulas and properties}
+%\subsubsection*{Linearity}
+%\scriptsize{
+%For any real number $c$ and any finite sequences $a_1, a_2,\ldots,a_n$ and $b_1,b_2,\ldots,b_n$, $\sum_{k=1}^{n}(ca_k + b_k) = c\sum_{k = 1}^{n}a_k + \sum_{k=1}^{n}b_k$.
+%}
+%
+%\subsubsection*{Arithmetic series}
+%\scriptsize{
+%The summation $\sum_{k=1}^{n}k$ has the value $\frac{1}{2}n(n+1) = \Theta(n^2)$.
+%}
+%
+%\subsubsection*{Sums of squares and cubes}
+%\scriptsize{
+%\begin{tabular}{ c c }
+%$ \sum_{k=0}^{n}k^2 = \frac{n(n+1)(2n+1)}{6}$ & $\sum_{k=0}^{n}k^3 = \frac{n^2(n+1)^2}{4}$
+%\end{tabular}
+%}
+%
+%\subsubsection*{Geometric series}
+%\scriptsize{
+%For real $x \neq 1$, the summation $\sum_{k=0}^{n}x^k$ is a \textbf{geometric} or \textbf{exponential series} and has the value $\sum_{k=0}^{n}x^k = \frac{x^{n+1}-1}{x-1}$.\\
+%When the summation is infinite and $|x| < 1$, we have the infinite decreasing geometric series $\sum_{k=0}^{\infty}x^k = \frac{1}{1-x}$.
+%}
+%
+%\subsubsection*{Harmonic series}
+%\scriptsize{
+%For positive integers $n$, the $n$th \textbf{harmonic number} is $H_n = \sum_{k=1}^{n}\frac{1}{k} = \ln(n) + O(1)$.
+%}
+%
+%\subsubsection*{Integrating and differentiating series}
+%\scriptsize{
+%By differentiating the geometric series and multiplying by $x$, we get $\sum_{k=0}^{\infty}kx^k = \frac{x}{(1-x)^2}$ for $|x| < 1$.
+%}
+%
+%\subsubsection*{Telescoping series}
+%\scriptsize{
+%For any sequence $a_0, a_1,\ldots, a_n$, $\sum_{k=1}^{n}(a_k-a_{k-1}) = a_n - a_0$ and $\sum_{k=1}^{n}(a_k - a_{k+1}) = a_0 - a_n$.
+%}
+%
+%\subsubsection*{Products}
+%\scriptsize{
+%If $n = 0$, the value of the product is defined to be 1. We can convert a product to a formula with a summation by using the identity $\lg(\prod_{k=1}^{n}a_k) = \sum_{k=1}^{n}\lg{a_k}$
+%}
+%
+%\subsection*{Bounding summations}
+%\subsubsection*{Mathematical Induction}
+%\scriptsize{
+%Prove that $\sum_{k=0}^{n}3^k$ is $O(3^n)$. $\sum_{k=0}^{n}3^k \leq c3^n$ for some constant $c$. Initial condition $n = 0$, $\sum_{k=0}^{0}3^k = 1 \leq c(1)$ as long as $c \geq 1$. Assuming bounds hold for $n$, prove $n + 1$. $\sum_{k=0}^{n+1}3^k = \sum_{k=0}^{n}3^k + 3^{n+1} \leq c3^n + 3^{n+1} = (1/3 + 1/c)c3^{n+1} \leq c3^{n+1}$ as long as $c \geq 3/2$.
+%}
+%
+%\subsubsection*{Bounding the terms}
+%\scriptsize{
+%Given a series $\sum_{k=0}^{n}a_k$, suppose that $a_{k+1}/a_k \leq r$ for all $k \geq 0$, where $0 < r < 1$ is a constant. We can bound the sum by an infinite decreasing geometric series, since $a_k \leq a_0r^k$, and thus $\sum_{k=0}^{n}a_k \leq \sum_{k=0}^{\infty}a_0r^k = a_0\sum_{k=0}^{\infty}r^k = a_0\frac{1}{1-r}$
+%}
+%
+%\subsubsection*{Splitting summations}
+%\scriptsize{
+%Splitting bounds on summations can lead to tighter bounds on equations. $\sum_{k=1}^{n}k = \sum_{k=1}^{n/2}k + \sum_{k=n/2+1}^{n}k \geq \sum_{k=1}^{n/2}0 + \sum_{k=n/2+1}^{n}(n/2) = (n/2)^2 = \Omega(n^2)$.\\
+%When each term $a_k$ in summation $\sum_{k=0}^{n}a_k$ is independent of $n$, then for any constant $k_0 > 0$, we write $\sum_{k=0}^{n}a_k = \sum_{k=0}^{k_0-1}a_k + \sum_{k=k_0}^{n}a_k = \Theta(1) + \sum_{k=k_0}^{n}a_k$.\\
+%For a harmonic series, we have $H_n = \sum_{k=1}^{n}\frac{1}{k} \leq \lg{n} + 1$.
+%}
+%
+%\section*{Probability}
+%\scriptsize{
+%The \textbf{conditional probability} of an event $A$ given that another event $B$ occurs is defined to be $\Pr\{A|B\} = \frac{\Pr\{A\cap B\}}{\Pr\{B\}}$\\
+%The \textbf{expected value} of a discrete random variable $X$ is $E[X] = \sum_{x}x\cdot\Pr\{X=x\}$.
+%}
+
+\section*{Elementary Graph Algorithms}
+\subsection*{Breadth-first search}
+\scriptsize{
+Given a graph $G = (V,E)$ and a \textbf{source} vertex $s$, systematically explore edges of $G$ to ``discover'' every vertex reachable from $s$. For any vertex $v$ reachable from $s$, the simple path in the breadth-first tree from $s$ to $v$ is the shortest path. \proc{bfs} colors each vertex white, gray or black. Gray and black vertices have been discovered. The total runtime for \proc{bfs} is $O(V + E)$. \proc{bfs} runs in time linear in the size of the adjaceny-list representation of $G$.
+}
+\subsubsection*{Shortest Paths}
+\scriptsize{
+Let $G = (V, E)$ be a graph, and let $s \in V$ be an arbitrary vertex. Then, for any edge $(u, v) \in E$, $\delta(s,v) \leq \delta(s, u) + 1$.\\
+Let $G=(V,E)$ be a graph, and suppose that \proc{bfs} is run on $G$ from a given source vertex $s \in V$. Then upon termination, for each vertex $v \in V$, the value $v.d$ computed by \proc{bfs} satisifies $v.d \geq \delta(s,v)$.\\
+Suppose the during the exectuion of \proc{bfs} on a graph $G=(V,E)$, the queue $Q$ contains the vertices $\langle v_1, v_2,\ldots,v_r\rangle$, where $v_1$ is the head of $Q$ and $v_r$ is the tail. Then, $v_r.d \leq v_1.d + 1$ and $v_i.d \leq v_{i+1}.d$ for $i = 1, 2, \ldots, r-1$.\\
+Suppose that vertices $v_i$ and $v_j$ are enqueued during the execution of \proc{bfs}, and that $v_i$ is enqueued before $v_j$. Then $v_i.d \leq v_j.d$ at the time that $v_j$ is enqueued.\\
+Let $G=(V,E)$ be a graph and suppose that \proc{bfs} is run on $G$ from a given source vertex $s \in V$. \proc{bfs} discovers every vertex $v \in V$ that is reachable from the source $s$, and upon termination, $v.d = \delta(s,v)$ for all $v \in V$. Moreover, for any vertex $v \neq s$ that is reachable from $s$, one of the shortest paths from $s$ to $v$ is a shortest path from $s$ to $v.\pi$ followed by the edge $(v.\pi, v)$. \\
+When applied to a graph $G = (V, E)$, \proc{bfs} constructs $\pi$ so that the predecessor subgraph $G_\pi = (V_\pi, E_\pi)$ is a breadth-first tree.
+}
+\subsection*{Depth-first search}
+\scriptsize{
+Explores edges out of the most recently discovered vertex $v$ that still has unexplored edges leaving it. Once all of $v$'s edges have been explored, the search ``backtracks'' to explore edges leaving the vertex from which $v$ was discovered. This process continues until we have discovered all the vertices that are reachable from the original source vertex. If any undiscovered vertices remain, the \proc{dfs} selects one as a new source and repeats the search from that source.\\
+The predecessor subgraph forms a \textbf{depth-first forset} comprising several \textbf{depth-first trees}. The edges in $E_\pi$ are \textbf{tree edges}. The runtime of \proc{dfs} is $\Theta(V + E)$.
+}
+\subsubsection*{Properties of DFS}
+\scriptsize{
+In any depth-first search of a graph $G=(V,E)$, for any two vertices $u$ and $v$, exactly one of the following three conditions hold:\\
+1. the intervals $\lbrack u.d, u.f\rbrack$ and $\lbrack v.d,v.f\rbrack$ are disjoint, and neither $u$ nor $v$ is a descendant of the other in the depth-first forest,\\
+2. the interval $\lbrack u.d, u.f\rbrack$ is contained entirely within the interval $\lbrack v.d, v.f\rbrack$, and $u$ is a descendant of $v$ in a depth-first tree, or\\
+3. the interval $\lbrack v.d, v.f\rbrack$ is contained entirely within the interval $\lbrack u.d, u.f\rbrack$, and $v$ is a descendant of $u$ in a depth-first tree.\\
+\textbf{White-path theorem:} In a depth-first forest of a graph $G = (V, E)$, vertex $v$ is a descendant of vertex $u$ if and only if at the time $u.d$ that the search discovers $u$, there is a path from $u$ to $v$ consisting entirely of white vertices.
+}
+\subsubsection*{Classification of edges}
+\scriptsize{
+1. \textbf{Tree edges} are edges in the depth-first forest $G_\pi$. Edge $(u, v)$ is a tree edge if $v$ was first discovered by exploring edge $(u, v)$.\\
+2. \textbf{Back edges} are those edges $(u, v)$ connecting a vertex $u$ to an ancestor $v$ in a depth-first tree.\\
+3. \textbf{Forward edges} are those nontree edges $(u,v)$ connecting a vertex $u$ to a descendant $v$ in a depth-first tree.\\
+4. \textbf{Cross edges} are all other edges. They can go between vertices in the same depth-first tree, as long as one vertex is not an ancestor of the other, or they can go between vertices in different depth-first trees.\\
+The color of vertex $v$ tells us something about the edge:\\
+1. \proc{white} indicates a tree edge, \\
+2. \proc{gray} indicates a back edge, and \\
+3. \proc{black} indicates a forward or cross edge.\\
+In a depth-first search of an undirected graph $G$, every edge of $G$ is either a tree edge or a back edge.
+}
+\subsection*{Topological Sort}
+\scriptsize{
+A \textbf{topological sort} of a dag $G=(V,E)$ is a linear ordering of all its vertices such that if $G$ contains an edge $(u,v)$, then $u$ appears before $v$ in the ordering.\\
+\proc{topological-sort} calls \proc{dfs} to compute the finishing times for each vertex. As each vertex is finished, insert it onto the front of a linked list. Return the linked list of vertices.\\
+The topological sort is performed in $\Theta(V + E)$ time.
+}
+\subsection*{Strongly Connected Components}
+\scriptsize{
+A strongly connected componenet of a directed graph $G = (V, E)$ is a maximal set of vertices $C \subseteq V$ such that for every pair of vertices $u$ and $v$ in $C$, we have $(u, v)$ and $(v,u)$; that is, vertices $u$ and $v$ are reachable from each other.\\
+Let $C$ and $C^\prime$ be distinct strongly connected components in directed graph $G = (V, E)$, let $u,v \in C$, let $u^\prime,v^\prime \in C^\prime$, and suppose that $G$ contains a path $(u,u^\prime)$. Then $G$ cannot also contain a path $(v^\prime, v)$.\\
+Let $C$ and $C^\prime$ be distinct strongly connected components in directed graph $G = (V,E)$. Suppose that there is an edge $(u,v) \in E$, where $u \in C$ and $v \in C^\prime$. Then $f(C) > f(C^\prime)$.\\
+Suppose that there is an edge $(u,v) \in E^T$, where $u \in C$ and $v \in C^\prime$. Then $f(C) < f(C^\prime)$.
+}
+
+\section*{Minimum Spanning Trees}
+\scriptsize {
+We have a connected, undirected graph $G = (V, E)$, we wish to find an acyclic subset $T \subseteq E$ that connects all of the vertices and whose total weight $w(T) = \sum_{(u,v) \in T}w(u,v)$ is minimized.
+}
+\subsection*{Growing a MST}
+\scriptsize {
+The greedy strategy is captured by the following generic method, which grows the minimum spanning tree one edge at a time. The generic method manages a set of edges $A$, mataining the loop invariant that prior to each iteration, $A$ is a subset of some minimum spanning tree.\\
+A \textbf{cut} $(S, V - S)$ of an undirected graph $G = (V,E)$ is a partition of $V$. An edge $(u,v) \in E$ \textbf{crosses} the cut $(S, V-S)$ if one of its endpoints is in $S$ and the other is in $V-S$. An edge is a \textbf{light edge} crossing a cut if its weight is the minimum of any edge crossing the cut.\\
+Let $G=(V,E)$ be a connected, undirected graph with a real-valued weight function $w$ defined on $E$. Let $A$ be a subset of $E$ that is included in some minimum spanning tree for $G$, let $(S, V-S)$ be any cut of $G$ that respects $A$, and let $(u,v)$ be a light edge crossing $(S, V-S)$. Then edge $(u,v)$ is safe for $A$.
+}
+
+\subsection*{Kruskal's and Prim's Algorithms}
+\scriptsize {
+In Kruskal's algorithm, the set $A$ is a forest whose vertices are all those of the given graph. The safe edge added to $A$ is always a least-weight edge in the graph that connects two distinct components. In Prim's algorithm, the set $A$ forms a single tree. The safe edge added to $A$ is always a least-weight edge connecting the tree to a vertex not in the tree.
+}
+
+\subsubsection*{Kruskal's Algorithm}
+\scriptsize {
+Examines edges in order of weight from lowest to highest. Checks, for each edge $(u,v)$, whether endpoints $u$ and $v$ belong to the same tree. If they do, then the edge $(u,v)$ cannot be added to the forest without creating a cycle, and the edge is discarded. Otherwise, we add the edge and merge the two trees together. Runtime is $O(E\lg^*{V})$.
+}
+
+\subsubsection*{Prim's Algorithm}
+\scriptsize {
+Edges in the set $A$ always form a single tree. Each step adds to the tree $A$ a light edge that connects $A$ to an isolated vertex -- one on which no edge of $A$ is incident. All vertices that are \emph{not} in the tree reside in a min-priority queue $Q$ based on a \emph{key} attribute. The runtime for Prim's algorithm $O(E\lg{V})$ Runtime depends on how we implement the min-priority queue $Q$.
+}
+
+\section*{Data Structures for Disjoint Sets}
+\subsection*{Disjoint-set operations}
+\scriptsize {
+Maintains a collection $S = \{S_1, S_2,\ldots,S_k\}$ of disjoint dynamic sets. Each set is identified by a \textbf{representative}, which is some member of the set.\\
+\proc{make-set}$(x)$ creates a new set whose only member is $x$. Since the sets are disjoint, $x$ need not already be in some other set.\\
+\proc{Union}$(x, y)$ unites the dynamic sets that contain $x$ and $y$ into a new set that is the union of these two sets. \\
+\proc{find-set}$(x)$ returns a pointer to the representative of the (unique) set containing $x$.
+}
+
+\subsection*{Disjoint-set forests}
+\scriptsize {
+Represent sets by rooted trees, with each node containing one member and each tree representing one set. In a \textbf{disjoint-set forest}, each member points only to its parent. The root of each tree contains the representative and is its own parent.\\
+\textbf{Union Rank:} Make the root of the tree with fewer nodes point to the root of the tree with more nodes. For each node, we mantain a \textbf{rank}, which is an upper bound on the height of the node. We make the root with the smaller rank point to the root with the larger rank during a \proc{union} operation. Gives runtime of $O(\log{V})$ per operation. \\
+\textbf{Path Compression:} Makes each node on the find path point directly to the root. Path compression does not change any ranks.
+}
+
+\section*{Single-Source Shortest Paths}
+\scriptsize {
+The \textbf{weight} $w(p)$ of path $p = \langle v_0, v_1,\ldots,v_k\rangle$ is the sum of the weights of its constituent edges: $w(p) = \sum_{i=1}^{k}w(v_{i-1}, v_{i})$. A \textbf{shortest path} from vertex $u$ to vertex $v$ is defined as any path $p$ with weight $w(p) = \delta(u,v)$.\\
+\textbf{Single-source Shortest-paths problem:} Given a graph $G = (V,E)$, we want to find a shortest path from a given \textbf{source} vertex $s \in V$ to each vertex $v \in V$. Can be used to solve following variants:\\
+\textbf{Single-destination Shortest-paths problem:} Find a shortest path to a given \textbf{destination} vertex $t$ from each vertex $v$. By reversing the direction of each edge in the graph, we can reduce this problem to a single-source problem.\\
+\textbf{Single-pair Shortest-path problem:} Find a shortest path from $u$ to $v$ for given vertices $u$ and $v$. If we solve the single-source problem with source vertex $u$, we solve this problem also. \\
+\textbf{All-pairs Shortest-paths problem:} Find a shortest path from $u$ to $v$ for every pair of vertices $u$ and $v$.\\
+\textbf{Optimal substructure:} Given a weighted, directed graph $G = (V,E)$ with weight function $w: E \rightarrow \mathbb{R}$, let $p = \langle v_0, v_1,\ldots, v_k\rangle$ be a shortest path from vertex $v_0$ to vertex $v_k$ and, for any $i$ and $j$ such that $0 \leq i \leq j \leq k$, let $p_{ij} = \langle v_i, v_{i+1},\ldots,v_j\rangle$ be the subpath of $p$ from vertex $v_i$ to vertex $v_j$. Then, $p_{ij}$ is a shortest path from $v_i$ to $v_j$.
+}
+
+\subsubsection*{Relaxation}
+\scriptsize {
+For each $v \in V$, we maintain an attribute $v.d$, which is an upper bound on the weight of a shortest path from source $s$ to $v$. A relaxation step may decrease the value of the shortest-path estimate $v.d$ and update $v$'s predecessor attribute $v.\pi$. 
+}
+
+\subsubsection*{Properties of shortest path and relaxation}
+\scriptsize {
+\textbf{Triangle inequality:} For any edge $(u,v) \in E$, we have $\delta(s,v) \leq \delta(s, u) + w(u,v)$.\\
+\textbf{Upper-bound property:} We always have $v.d \geq \delta(s,v) \forall v \in V$, and once $v.d$ achieves the value $\delta(s,v)$, it never changes.\\
+\textbf{No-path property:} If there is no path from $s$ to $v$, then we always have $v.d = \delta(s,v) = \infty$.\\
+\textbf{Convergence property:} If $s \rightsquigarrow u \rightarrow v$ is a shortest path in $G$ for some $u, v \in V$, and if $u.d = \delta(s,u)$ at any time prior to relaxing edge $(u, v)$, then $v.d = \delta(s, v)$ at all times afterwards.\\
+\textbf{Path-relaxation property:} If $p = \langle v_0, v_1,\ldots,v_k\rangle$ is a shorttest path from $s = v_0$ to $v_k$, and we relax the edges of $p$ in the order $(v_0, v_1), (v_1, v_2),\ldots,(v_{k-1},v_{k})$, then $v_{k}.d = \delta(s,v_k)$. This property holds regardless of any other relaxation steps that occur, even if they are intermixed with relaxations of the edges of $p$.\\
+\textbf{Predecessor-subgraph property:} Once $v.d=\delta(s, v)$ for all $v \in V$, the predecessor subgraph is a shortest-paths tree rooted at $s$.
+}
+
+\subsection*{The Bellman-Ford Algorithm}
+\scriptsize {
+Relaxes edges, progressively decreases an estimate $v.d$ on the weight of a shortest path from the source $s$ to each vertex $v \in V$ until it achieves the actual shortest-path weight $\delta(s,v)$. The algorithm returns TRUE if and only if the graph contains no negative-weight cycles.\\
+\textbf{Correctness:} Let \proc{bellman-ford} be run on a weighted, directed graph $G = (V,E)$ with source $s$ and weight function $w: E \rightarrow \mathbb{R}$. If $G$ contains no negative-weight cycles that are reachable from $s$, then the algorithm returns TRUE, we have $v.d = \delta(s,v)$ for all vertices $v \in V$, and the predecessor subgraph $G_\pi$ is a shortest-paths tree rooted at $s$. If $G$ does contain a negative-weight cycle reachable from $s$, then the algorithm returns FALSE. Runtime $O(VE)$
+}
+
+\subsection*{Single-source shortest paths in directed acyclic graphs}
+\scriptsize {
+\textbf{Runtime:} $\Theta(V + E)$. Topologically sorts the dag to impose a linear ordering on the vertices. If the dag contains a path from vertex $u$ to vertex $v$, then $u$ precedes $v$ in the topological sort. We make one pass over the vertices in the topologically sorted order. As we proces each vertex, we relax each edge that leaves the vertex.\\
+If a weighted, directed graph $G = (V, E)$ has source vertex $s$ and no cycles, then at the termination of the \proc{dag-shortest-paths} procedure, $v.d = \delta(s,v)$ for all vertices $v \in V$, and the predecessor subgraph $G_\pi$ is a shortest-paths tree.
+}
+
+\subsection*{Dijkstra's Algorithm}
+\scriptsize {
+All edge weights must be nonnegative.\\
+Maintains a set $S$ of vertices whose final shortest-path weights from the source $s$ have already been dtermined. Repeatedly selects the vertex $u \in V - S$ with the minimum shortest-path estimate, adds $u$ to $S$, and relaxes all edges leaving $u$. The runtime is $O((V + E)\lg{V})$ which is $O(E\lg{V})$ if all vertices are reachable from the source.
+}
+
+\section*{All-Pairs Shortest Paths}
+\scriptsize {
+Can solve an all-pairs shortest-paths problem by running a single-source shortest-paths algorithm $|V|$ times, once for each vertex as the source.
+}
+
+\subsection*{Shortest paths and matrix multiplcation}
+\scriptsize {
+\textbf{Structure:} For the all-pairs shortest-paths problem on a graph $G = (V,E)$, all subpaths of a shortest path are shortest paths. \\
+\textbf{Recursive solution:} $l_{ij}^{(m)} = \min_{1 \leq k \leq n} \{l_{ik}^{(m-1)} + w_{kj}\}$.\\
+\textbf{Computing the shortest-path:} $L^{(1)}, L^{(2)},\ldots, L^{(n-1)}$, where for $m = 1, 2, \ldots, n - 1$, we have $L^{(m)} = (l_{ij}^{(m)})$. Its running time is $\Theta(n^3)$.
+}
+
+\subsection*{Floyd-Warshall algorithm}
+\scriptsize {
+Runs in $\Theta(V^3)$ time.\\
+Considers the intermediate vertices of a shortest path, where an \textbf{intermediate} vertex of a simple path $p = \langle v_1, v_2, \ldots, v_l\rangle$ is any vertex of $p$ other than $v_1$ or $v_l$. \\
+If $k$ is not an intermediate vertex of path $p$, then all intermediate vertices of path $p$ are in the set $\{1, 2,\ldots,k-1\}$. Thus, a shortest path from vertex $i$ to vertex $j$ with all intermediate vertices in the set $\{1, 2,\ldots, k-1\}$. \\
+If $k$ is an intermediate vertex of path $p$, then we decome $p$ into two paths between $i$, $k$ and $j$. $p_1$ is the shortest path between $i$ and $k$ and $p_2$ is the shortest path between $k$ and $j$.\\
+\textbf{Recurrence:} $d_{ij}^{(k)} = w_{ij}$ if $k = 0$ else $\min(d_{ij}^{(k-1)},d_{ik}^{(k-1)}+d_{kj}^{(k-1)})$ if $k \geq 1$. The matrix $D^{(n)} = (d_{ij}^{(n)})$ gives the final answer: $d_{ij}^{(n)} = \delta(i,j)$ for all $i,j \in V$.\\
+The procedure returns the matrix $D^{(n)}$ of the shortest-path weights. The algorithm runs in $\Theta(n^3)$ time.
+}
+
+\section*{Maximum Flow}
+\subsection*{Flow networks}
+\scriptsize{
+Directed graph each edge has a nonnegative \textbf{capacity} There is no edges in the reverse direction from a given edge. \\ Two properties:\\
+1. \textbf{Capacity constraint:} $\forall u, v \in V, 0 \leq f(u,v) \leq c(u,v)$\\
+2. \textbf{Flow conservation:} $\forall u \in V - \{s, t\}, \sum_{v\in V}f(v,u) = \sum_{v \in V}f(u,v)$. $(u,v) \notin E, f(u,v) = 0$. \\
+\textbf{value} $|f|$ of a flow $f$ is defined as $|f| = \sum_{v \in V}f(s,v) - \sum_{v \in V}f(v,s)$
+}
+
+\subsection*{The Ford-Fulkerson Method}
+\scriptsize {
+Initialize flow $f$ to 0, while there exists an augmmenting path $p$ in the residual network $G_f$, augment flow $f$ along $p$; return $f$. 
+}
+
+\subsubsection*{Residual Networks}
+\scriptsize {
+An edge of the flow network can admit an amount of additional flow equal to edge's capacity minus the flow on that edge. The only edges of $G$ that are in $G_f$ are those that can admit more flow.\\
+An edge can admit flow in the opposite direction to $(u,v)$, at most canceling out the flow on $(u,v)$.
+}
+
+\subsubsection*{Augmenting paths}
+\scriptsize {
+Given a flow network $G = (V, E)$ and a flow $f$, an \textbf{augmenting path} $p$ is a simple path from $s$ to $t$ in the residual network $G_f$.\\
+We call the maximum amount by which we can increase the flow on each edge in an augmenting path $p$ the \textbf{residual capacity} of $p$, given by $c_f(p) = \min\{c_f(u,v):(u,v)\,\,\textrm{is on}\,\,p\}$.
+}
+
+\subsubsection*{Cuts}
+\scriptsize {
+A \textbf{cut} $(S,T)$ of the flow network $G = (V, E)$ is a partition of $V$ into $S$ and $T = V - S$ such that $s \in S$ and $t \in T$. If $f$ is a flow, then the \textbf{net flow} $f(S,T)$ across the cut $(S, T)$ is defined to be $f(S,T) = \sum_{u\in S}\sum_{v\in T}f(u,v) - \sum_{u \in S}\sum_{v \in T}f(v,u)$.\\
+The \textbf{capacity} of the cut $(S, T)$ is $c(S,T) = \sum_{u\in S}\sum_{v\in T}c(u,v)$.\\
+A \textbf{minimum cut} of a network is a cut whose capacity is minimum over all cuts of the network.\\
+Let $f$ be a flow in a flow network $G$ with source $s$ and sink $t$, and let $(S, T)$ be any cut of $G$. Then the net flow across $(S,T)$ is $f(S,T) = |f|$.\\
+The value of any flow $f$ in a flow network $G$ is bounded from above by the capacity of any cut of $G$.\\
+If $f$ is a flow in a flow network $G = (V, E)$ with source $s$ and sink $t$, then the following conditions are equivalent:\\
+1. $f$ is a maximum flow in $G$.\\
+2. The residual network $G_f$ contains no augmenting path\\
+3. $|f| = c(S,T)$ for some cut $(S,T)$ of $G$.\\
+The \proc{ford-fulkerson} algorithm runs in $O(E|f^*|)$ time, which is the number of maximum flows in the network times the number of edges in the network.
+}
+
+\section*{NP-Completeness}
+\scriptsize {
+Reductions must take polynomail time and map answers to problems on to the same outputs.\\
+1. Given an instance of $\alpha$ of problem $A$, use a polynomial-time reduction algorithm to transform it to an instance of $\beta$ of problem $B$.\\
+2. Run the polynomial-time decision algorithm for $B$ on the instance $\beta$.\\
+3. Use the answer for $\beta$ as the answer for $\alpha$.\\
+A language $L$ is decided in polynomial time by an algorithm $A$ if there exists a constant $k$ such that for any length-$n$ string $x \in \{0,1\}^*$, the algorithm correctly decides whether $x \in L$ in time $O(n^k)$.\\
+$\mathcal{P} = \{ L:L\,\,\textrm{is accepted by a polynomial-time algorithm}\}$.\\
+If any NP-complete problem is polynomial-time solvable then P = NP. Equivalently, if any problem in NP is not polynomial-time solvable, then no NP-complete problem is polynomial-time solvable.\\
+If $L$ is a language such that $L^\prime \leq_P L$ for some $L^\prime \in NPC$, then $L$ is NP-hard. If, in addition, $L \in NP$, then $L \in NPC$.\\
+1. Prove $L \in NP$.\\
+2. Select a known NP-complete language $L^\prime$.\\
+3. Describe an algorithm that computes a function $f$ mapping every instance $x \in \{0, 1\}^*$ of $L^\prime$ to an instance $f(x)$ of $L$.\\
+4. Prove that the function $f$ satisfies $x \in L^\prime$ if and only if $f(x) \in L$ for all $x \in \{0,1\}^*$.\\
+5. Prove that the algorithm computing $f$ runs in polynomial time.
+}
+
+\subsubsection*{Satisfiability}
+\scriptsize {
+An instance is composed of 1. $n$ boolean variables, 2. $m$ boolean connectives, 3. parentheses, where $\phi$ is a satisfiable boolean formula.
+}
+
+\subsubsection*{3-SAT}
+\scriptsize {
+3-CNF, each clause has exactly three distinct literals. Asked whether a given boolean formula $\phi$ is satistfiable.
+}
+\subsubsection*{Clique Problem}
+\scriptsize {
+A clique is a complete subgraph of $G$. We ask that a graph $G$ contains a clique of size $k$ as the decision problem. Optimization problem looks to make the maximum number of vertices in the subgraph.
+}
+
+\subsubsection*{Vertex-Cover Problem}
+\scriptsize {
+Each vertex ``covers'' incident edges, and a vertex cover for $G$ is a set of vertices that covers all the edges in $E$. Find a vertex cover of minimum size in a given graph. Determine if there exists a vertex  cover of size $k$.
+}
+
+\subsubsection*{Hamiltonian-Cycle Problem} 
+\scriptsize {
+Given a graph $G=(V,E)$, is there a cycle that visits each vertex exactly once?
+}
+
+\subsubsection*{Subset-Sum}
+\scriptsize {
+Given a finite set $S$ of positive integers and an integer target $t > 0$. Does there exist a subset $S^\prime \subseteq S$ whose elements sum to $t$.
+}
+\end{multicols}
+\end{document}
